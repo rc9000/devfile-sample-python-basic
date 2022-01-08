@@ -7,8 +7,9 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     out = ["Hello World (forked)!"]
-    for k, v in os.environ.items():
-        out.append(f'{k}={v}')
+    for k in [ k for k in os.environ.keys() if k in ['PATH', 'TERM', 'HOSTNAME']]:
+        print(f"k {k}")
+        out.append(f'{k}={os.environ[k]}')
 
     return str.join("<br>\n", out)
 
