@@ -27,6 +27,13 @@ components:
       endpoints:
         - name: web
           targetPort: 8080
+  - name: postgres
+    container:
+      image: postgres:14
+      mountSources: true
+      endpoints:
+        - name: postgres-endpoint
+          targetPort: 5432
 commands:
   - id: pip-install-requirements
     exec:
@@ -40,6 +47,12 @@ commands:
       commandLine: "python app.py"
       workingDir: ${PROJECTS_ROOT}
       component: py-web
+      group:
+        kind: run
+        isDefault: true
+  - id: run-db
+    exec:
+      component: postgres
       group:
         kind: run
         isDefault: true
